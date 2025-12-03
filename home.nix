@@ -19,6 +19,13 @@
     enable = true;
   };
 
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    enableInteractive = true;
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
+  };
+
   programs.fzf = {
     enable = true;
     enableFishIntegration = true;
