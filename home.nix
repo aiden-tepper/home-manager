@@ -17,6 +17,16 @@
 
   programs.fish = {
     enable = true;
+    functions = {
+    r = ''
+      for cmd in $history
+        if test "$cmd" != "r"
+          eval $cmd
+          return
+        end
+      end
+    '';
+    };
   };
 
   programs.starship = {
