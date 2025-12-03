@@ -12,4 +12,6 @@
     # Don't ever change this after the first build.  Don't ask questions.
     stateVersion = "23.11";
   };
+
+  programs.home-manager.enable = true;
 }
