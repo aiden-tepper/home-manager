@@ -2,7 +2,7 @@
 {
   home = {
     packages = with pkgs; [
-      cbonsai
+      cbonsai lazygit bat fd
     ];
 
     username = "localaiden";
@@ -14,10 +14,6 @@
   };
 
   programs.home-manager.enable = true;
-
-  programs.lazygit.enable = true;
-  programs.bat.enable = true;
-  programs.fd.enable = true;
 
   programs.fzf = {
     enable = true;
