@@ -5,7 +5,7 @@
 
   home = {
     packages = with pkgs; [
-      cbonsai lazygit bat fd
+      cbonsai lazygit bat fd ripgrep
     ];
 
     username = "localaiden";
