@@ -15,6 +15,10 @@
 
   programs.home-manager.enable = true;
 
+  programs.fish = {
+    enable = true;
+  };
+
   programs.fzf = {
     enable = true;
     enableFishIntegration = true;
