@@ -1,11 +1,11 @@
 { lib, pkgs, ... }:
 
 {
-  imports = [ ./widgets.nix ];
+  imports = [ ./widgets.nix ./nvim.nix ];
 
   home = {
     packages = with pkgs; [
-      cbonsai lazygit bat fd ripgrep
+      cbonsai lazygit bat fd ripgrep devcontainer
     ];
 
     username = "localaiden";
