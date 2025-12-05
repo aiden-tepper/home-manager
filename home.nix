@@ -1,11 +1,20 @@
 { lib, pkgs, ... }:
 
 {
-  imports = [ ./widgets.nix ./nvim.nix ];
+  imports = [
+    ./widgets.nix
+    ./nvim.nix
+  ];
 
   home = {
     packages = with pkgs; [
-      cbonsai lazygit bat fd ripgrep devcontainer
+      cbonsai
+      lazygit
+      bat
+      fd
+      ripgrep
+      devcontainer
+      rust-analyzer
     ];
 
     username = "localaiden";
@@ -21,14 +30,14 @@
   programs.fish = {
     enable = true;
     functions = {
-    r = ''
-      for cmd in $history
-        if test "$cmd" != "r"
-          eval $cmd
-          return
+      r = ''
+        for cmd in $history
+          if test "$cmd" != "r"
+            eval $cmd
+            return
+          end
         end
-      end
-    '';
+      '';
     };
     interactiveShellInit = "set fish_greeting"; # disable greeting
   };
@@ -67,4 +76,9 @@
   };
   xdg.configFile."zellij/config.kdl".source = ./dotfiles/zellij/config.kdl;
   xdg.configFile."zellij/layouts".source = ./dotfiles/zellij/layouts;
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 }
