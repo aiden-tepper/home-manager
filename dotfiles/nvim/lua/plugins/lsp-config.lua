@@ -10,6 +10,7 @@ return {
 		vim.lsp.enable("ruff")
 		vim.lsp.enable("clangd")
 		vim.lsp.enable("nixd")
+		vim.lsp.enable("rust_analyzer")
 
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
