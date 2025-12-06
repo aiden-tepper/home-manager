@@ -15,6 +15,7 @@
       ripgrep
       devcontainer
       rust-analyzer
+      github-copilot-cli
     ];
 
     username = "localaiden";
@@ -24,6 +25,8 @@
     # Don't ever change this after the first build.  Don't ask questions.
     stateVersion = "25.11";
   };
+
+  nixpkgs.config.allowUnfree = true;
 
   programs.home-manager.enable = true;
 
