@@ -13,13 +13,24 @@
   outputs = { nixpkgs, home-manager, ... }:
     let
       lib = nixpkgs.lib;
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs { inherit system; };
+      
+      # macOS system configuration
+      darwinSystem = "aarch64-darwin";
+      darwinPkgs = import nixpkgs { system = darwinSystem; };
+      
+      # Linux system configuration
+      linuxSystem = "x86_64-linux";
+      linuxPkgs = import nixpkgs { system = linuxSystem; };
     in {
       homeConfigurations = {
-        aiden = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./home.nix ];
+        macbook = home-manager.lib.homeManagerConfiguration {
+          pkgs = darwinPkgs;
+          modules = [ ./hosts/macbook.nix ];
+        };
+        
+        spectre = home-manager.lib.homeManagerConfiguration {
+          pkgs = linuxPkgs;
+          modules = [ ./hosts/spectre.nix ];
         };
       };
     };

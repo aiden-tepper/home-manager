@@ -1,6 +1,6 @@
 .PHONY: update
 update:
-	home-manager switch --flake .#aiden
+	home-manager switch --flake .#macbook
 
 .PHONY: clean
 clean:
