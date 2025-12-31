@@ -24,7 +24,7 @@ This configuration supports multiple hosts:
 ```bash
 home-manager switch --flake .#macbook
 # or use the Makefile
-make update              # uses macbook by default
+make update              # defaults to macbook host
 make update-macbook      # explicit target
 ```
 
