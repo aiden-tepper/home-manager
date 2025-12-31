@@ -7,6 +7,15 @@
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install
 ```
 
+2) Initial setup (first time only):
+```bash
+# For macOS
+nix run github:nix-community/home-manager -- switch --flake .#macbook
+
+# For Arch Linux
+nix run github:nix-community/home-manager -- switch --flake .#spectre
+```
+
 ### Usage
 
 This configuration supports multiple hosts:
@@ -15,12 +24,16 @@ This configuration supports multiple hosts:
 ```bash
 home-manager switch --flake .#macbook
 # or use the Makefile
-make update
+make update              # uses macbook by default
+make update-macbook      # explicit target
 ```
 
 #### Arch Linux (x86_64-linux)
 ```bash
 home-manager switch --flake .#spectre
+# or use the Makefile
+make update HOST=spectre # override default host
+make update-spectre      # explicit target
 ```
 
 ### Structure
