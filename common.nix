@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -16,6 +16,9 @@
       devcontainer
       rust-analyzer
       github-copilot-cli
+      cowsay
+      docker
+      docker-credential-helpers
     ];
 
     # You do not need to change this if you're reading this in the future.
@@ -72,7 +75,6 @@
 
   programs.zellij = {
     enable = true;
-    enableFishIntegration = true;
   };
   xdg.configFile."zellij/config.kdl".source = ./dotfiles/zellij/config.kdl;
   xdg.configFile."zellij/layouts".source = ./dotfiles/zellij/layouts;
