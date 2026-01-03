@@ -1,5 +1,5 @@
-# Default host (can be overridden: make update HOST=spectre, or use explicit targets)
-HOST ?= macbook
+# Default host (can be overridden: make update HOST=macbook, or use explicit targets)
+HOST ?= spectre
 
 .PHONY: update
 update:
