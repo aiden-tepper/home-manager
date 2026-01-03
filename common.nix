@@ -22,6 +22,7 @@
       gnumake
       less
       openssh
+      mesa
     ];
 
     # You do not need to change this if you're reading this in the future.
