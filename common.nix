@@ -21,6 +21,7 @@
       docker-credential-helpers
       gnumake
       less
+      openssh
     ];
 
     # You do not need to change this if you're reading this in the future.
@@ -44,7 +45,15 @@
         end
       '';
     };
-    interactiveShellInit = "set fish_greeting"; # disable greeting
+    interactiveShellInit = ''
+      			set fish_greeting # disable greeting
+
+      			# automatically start ssh-agent and add ssh key
+      			if not set -q SSH_AUTH_SOCK
+      				eval (ssh-agent -c)
+      				ssh-add ~/.ssh/id_ed25519 2>/dev/null
+      			end
+      		'';
   };
 
   programs.starship = {
@@ -73,6 +82,12 @@
     enable = true;
     settings.user.name = "Aiden Tepper";
     settings.user.email = "aidenjtep@gmail.com";
+    settings.url."git@github.com:".insteadOf = "https://github.com/";
+  };
+
+  programs.gh = {
+    enable = true;
+    settings.git_protocol = "ssh";
   };
 
   programs.zellij = {
