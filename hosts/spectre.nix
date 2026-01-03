@@ -18,8 +18,6 @@
     dunst
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
-    noto-fonts
-    noto-fonts-emoji
   ];
 
   home.sessionVariables = {
@@ -29,5 +27,5 @@
     XDG_SESSION_DESKTOP = "Hyprland";
   };
 
-  home.file.".config/hypr/hyprland.conf".source = "../dotfiles/hyprland.conf";
+  home.file.".config/hypr/hyprland.conf".source = ../dotfiles/hyprland.conf;
 }
