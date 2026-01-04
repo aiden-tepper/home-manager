@@ -3,6 +3,9 @@ set -e # Exit on error
 
 echo "--- Starting Aiden's Nix-on-Arch Bootstrap ---"
 
+# Before we begin, ensure tight permissions on btrfs snapshot dir for safety
+sudo chmod 700 /.snapshots
+
 # 1. Update Arch System & Install Hardware Handshake
 # These are the things Nix can't/shouldn't manage on a non-NixOS system
 echo "Installing System Foundations (Arch)..."
