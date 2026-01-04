@@ -28,15 +28,8 @@ else
     echo "Nix is already installed."
 fi
 
-# 4. Clone Dotfiles (If not already in the repo)
-if [ ! -d "$HOME/dotfiles-repo" ]; then
-    echo "Cloning configuration..."
-    git clone git@github.com:yourusername/your-repo.git ~/dotfiles-repo
-fi
-
-# 5. Apply Home Manager
+# 4. Apply Home Manager
 echo "Applying Nix Flake..."
-cd ~/dotfiles-repo
 nix run github:nix-community/home-manager -- switch --flake .#spectre
 
 echo "Bootstrap complete! Please REBOOT to finalize group permissions."
