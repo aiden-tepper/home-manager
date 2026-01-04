@@ -33,4 +33,14 @@ pacstrap -K /mnt base linux linux-firmware btrfs-progs git vim networkmanager su
 # Generate FSTAB
 genfstab -U /mnt >> /mnt/etc/fstab
 
+# Get the UUID of your main partition
+UUID=$(blkid -s UUID -o value /dev/vda2)
+
+# Create the mount point
+mkdir -p /mnt/.snapshots
+
+# Append the entry to fstab
+# we use subvolid=5 to tell Linux we want the absolute root of the disk
+echo "UUID=$UUID /.snapshots btrfs subvolid=5,compress=zstd,noatime 0 0" >> /mnt/etc/fstab
+
 echo "Done! Now arch-chroot /mnt and run the next script."
