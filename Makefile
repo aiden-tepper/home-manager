@@ -16,3 +16,15 @@ update-spectre:
 .PHONY: clean
 clean:
 	nix-collect-garbage -d
+
+.PHONY: bootstrap
+bootstrap:
+	nix run github:nix-community/home-manager -- switch --flake .#$(HOST)
+
+.PHONY: bootstrap-macbook
+bootstrap:
+	nix run github:nix-community/home-manager -- switch --flake .#macbook
+
+.PHONY: bootstrap-spectre
+bootstrap:
+	nix run github:nix-community/home-manager -- switch --flake .#spectre
