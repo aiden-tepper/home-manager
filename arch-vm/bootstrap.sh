@@ -22,9 +22,14 @@ if ! command -v nix &> /dev/null; then
     . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
 
-# 4. Clone repo and apply Home Manager
-git clone https://github.com/aiden-tepper/home-manager ~/home-manager
-cd ~/home-manager
+# 4. Create home for user-specific data in @persist subvol
+sudo mkdir -p /persist/home/aiden
+sudo chown aiden:aiden /persist/home/aiden
+sudo chmod 700 /persist/home/aiden
+
+# 5. Clone repo and apply Home Manager
+git clone https://github.com/aiden-tepper/home-manager /persist/home/aiden/home-manager
+cd /persist/home/aiden/home-manager
 make bootstrap
 
 echo "Bootstrap complete!"
