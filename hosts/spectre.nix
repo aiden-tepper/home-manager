@@ -10,14 +10,37 @@
 
   fonts.fontconfig.enable = true;
 
+  # programs.noctalia-shell = {
+  #   enable = true;
+  # };
+
+  programs.caelestia = {
+    enable = true;
+  };
+  #   systemd = {
+  #     enable = true;
+  #     target = "graphical-session.target";
+  #     environment = [ ];
+  #   };
+  #   settings = {
+  #     bar.status.showBattery = true;
+  #   };
+  #   cli = {
+  #     enable = true;
+  #     settings = {
+  #       theme.enableGtk = true;
+  #     };
+  #   };
+  # };
+
   home.packages = with pkgs; [
     kitty
-    waybar
+    # waybar
     rofi
     swww
     dunst
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
+    # nerd-fonts.fira-code
+    # nerd-fonts.jetbrains-mono
   ];
 
   home.sessionVariables = {
@@ -28,4 +51,5 @@
   };
 
   home.file.".config/hypr/hyprland.conf".source = ../dotfiles/hyprland.conf;
+  # home.file.".config/caelestia/hypr-user.conf".source = ../dotfiles/hyprland.conf;
 }

@@ -8,29 +8,51 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      caelestia-shell,
+      noctalia,
+      ...
+    }:
     let
       lib = nixpkgs.lib;
-      
+
       # macOS system configuration
       darwinSystem = "aarch64-darwin";
       darwinPkgs = import nixpkgs { system = darwinSystem; };
-      
+
       # Linux system configuration
       linuxSystem = "x86_64-linux";
       linuxPkgs = import nixpkgs { system = linuxSystem; };
-    in {
+    in
+    {
       homeConfigurations = {
         macbook = home-manager.lib.homeManagerConfiguration {
           pkgs = darwinPkgs;
           modules = [ ./hosts/macbook.nix ];
         };
-        
+
         spectre = home-manager.lib.homeManagerConfiguration {
           pkgs = linuxPkgs;
-          modules = [ ./hosts/spectre.nix ];
+          modules = [
+            ./hosts/spectre.nix
+            caelestia-shell.homeManagerModules.default
+            noctalia.homeModules.default
+          ];
         };
       };
     };
