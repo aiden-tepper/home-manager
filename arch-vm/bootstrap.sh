@@ -23,8 +23,8 @@ if ! command -v nix &> /dev/null; then
 fi
 
 # 4. Clone repo and apply Home Manager
-git clone https://github.com/aiden-tepper/home-manager ~
+git clone https://github.com/aiden-tepper/home-manager ~/home-manager
 cd ~/home-manager
-nix run github:nix-community/home-manager -- switch --flake .#spectre
+make bootstrap
 
 echo "Bootstrap complete!"
