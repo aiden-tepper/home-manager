@@ -10,7 +10,6 @@ OPTS="compress=zstd,noatime"
 # Create Subvolumes
 mount /dev/vda2 /mnt
 btrfs subvolume create /mnt/@             # Ephemeral Root
-btrfs subvolume create /mnt/@home         # Persistent User Data
 btrfs subvolume create /mnt/@nix          # Persistent Nix Store
 btrfs subvolume create /mnt/@persist      # Persistent System Configs
 btrfs subvolume create /mnt/@log          # Persistent Logs
@@ -23,10 +22,9 @@ umount /mnt
 
 # Mount everything in place
 mount -o $OPTS,subvol=@ /dev/vda2 /mnt
-mkdir -p /mnt/{boot,home,nix,persist,var/log,var/cache/pacman/pkg,var/lib/pacman}
+mkdir -p /mnt/{boot,nix,persist,var/log,var/cache/pacman/pkg,var/lib/pacman}
 
 mount /dev/vda1 /mnt/boot
-mount -o $OPTS,subvol=@home /dev/vda2 /mnt/home
 mount -o $OPTS,subvol=@nix /dev/vda2 /mnt/nix
 mount -o $OPTS,subvol=@persist /dev/vda2 /mnt/persist
 mount -o $OPTS,subvol=@log /dev/vda2 /mnt/var/log

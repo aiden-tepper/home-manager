@@ -7,7 +7,7 @@ btrfs subvolume snapshot -r /mnt/@ /mnt/@blank
 
 # Verify it exists
 ls /mnt
-# Should see: @  @blank  @home  @nix ...
+# Should see: @  @blank  @nix ...
 
 umount /mnt
 reboot

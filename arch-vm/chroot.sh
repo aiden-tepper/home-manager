@@ -66,7 +66,13 @@ EOF
 systemd-machine-id-setup
 mkdir -p /persist/etc
 cp /etc/machine-id /persist/etc/machine-id
-# Bind mount it via fstab for safety
-echo "/persist/etc/machine-id /etc/machine-id none bind 0 0" >> /etc/fstab
+
+cat <<EOF >> /etc/fstab
+/persist/etc/passwd /etc/passwd none bind 0 0
+/persist/etc/shadow /etc/shadow none bind 0 0
+/persist/etc/group /etc/group none bind 0 0
+/persist/etc/machine-id /etc/machine-id none bind 0 0
+/persist/var/lib/networkmanager /var/lib/networkmanager none bind 0 0
+EOF
 
 echo "Phase 2 Complete. Exit chroot now."
