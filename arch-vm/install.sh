@@ -82,9 +82,6 @@ echo "aiden:password" | chpasswd  # Set a temp password
 groupadd -r seat
 usermod -aG seat,video,render aiden
 
-# Add wheel group to sudoers list
-echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
-
 # --- 1. Create the Nuke Hook (Runtime) ---
 cat <<HOOK > /usr/lib/initcpio/hooks/erase-my-darlings
 run_hook() {
@@ -134,7 +131,10 @@ BOOT
 
 # --- 4. Persistence Tricks ---
 # Create the physical folders in the persist vault
-mkdir -p /persist/etc
+mkdir -p /persist/etc/sudoers.d
+echo "%wheel ALL=(ALL:ALL) ALL" > /persist/etc/sudoers.d/wheel
+chmod 440 /persist/etc/sudoers.d/wheel 
+chown root:root /persist/etc/sudoers.d/wheel
 mkdir -p /persist/var/lib/{networkmanager,bluetooth}
 mkdir -p /persist/home/aiden/{.ssh,.config/gh,projects}
 chown -R 1000:1000 /persist/home/aiden
@@ -151,6 +151,7 @@ cat <<FSTAB >> /etc/fstab
 /persist/etc/shadow /etc/shadow none bind 0 0
 /persist/etc/group /etc/group none bind 0 0
 /persist/etc/machine-id /etc/machine-id none bind 0 0
+/persist/etc/sudoers.d /etc/sudoers.d none bind 0 0
 
 # --- SYSTEM STATE ---
 /persist/var/lib/networkmanager /var/lib/networkmanager none bind 0 0
