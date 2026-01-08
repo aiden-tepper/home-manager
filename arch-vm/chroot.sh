@@ -62,17 +62,34 @@ options root=PARTUUID=$(blkid -s PARTUUID -o value /dev/vda2) rootflags=subvol=@
 EOF
 
 # --- 4. Persistence Tricks ---
-# Initialize machine-id so it can be persisted
-systemd-machine-id-setup
+# Create the physical folders in the persist vault
 mkdir -p /persist/etc
+mkdir -p /persist/var/lib/{networkmanager,bluetooth,pacman}
+mkdir -p /persist/home/aiden/{.ssh,.config/gh,projects}
+chown -R 1000:1000 /persist/home/aiden
+chmod 700 /persist/home/aiden/.ssh
+
+# Copy current identify files (so we're not locked out)
+cp /etc/{passwd,shadow,group} /persist/etc/
+systemd-machine-id-setup
 cp /etc/machine-id /persist/etc/machine-id
 
 cat <<EOF >> /etc/fstab
+# --- SYSTEM IDENTITY ---
 /persist/etc/passwd /etc/passwd none bind 0 0
 /persist/etc/shadow /etc/shadow none bind 0 0
 /persist/etc/group /etc/group none bind 0 0
 /persist/etc/machine-id /etc/machine-id none bind 0 0
+
+# --- SYSTEM STATE ---
 /persist/var/lib/networkmanager /var/lib/networkmanager none bind 0 0
+/persist/var/lib/pacman /var/lib/pacman none bind 0 0
+/persist/var/lib/bluetooth /var/lib/bluetooth none bind 0 0
+
+# --- USER IDENTITY & DEV ---
+/persist/home/aiden/.ssh /home/aiden/.ssh none bind 0 0
+/persist/home/aiden/.config/gh /home/aiden/.config/gh none bind 0 0
+/persist/home/aiden/projects /home/aiden/projects none bind 0 0
 EOF
 
 echo "Phase 2 Complete. Exit chroot now."
