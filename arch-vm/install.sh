@@ -99,7 +99,7 @@ HOOK
 
 # Register Hook & Rebuild
 sed -i 's/HOOKS=(base udev/HOOKS=(base udev erase-root/' /etc/mkinitcpio.conf
-mkinitcpio -P
+mkinitcpio -P || true
 
 # Bootloader
 bootctl install
