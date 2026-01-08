@@ -3,6 +3,10 @@ set -e
 
 echo "--- Starting Unified Arch-Nix Installation ---"
 
+# Non-Interactive Partitioning
+sgdisk -Z -o -n 1:0:+512M -t 1:ef00 -n 2:0:0 -t 2:8300 /dev/vda
+udevadm settle # Wait for kernel to register new partitions
+
 # Setup Partitions
 mkfs.fat -F 32 -n BOOT /dev/vda1
 mkfs.btrfs -L ARCH /dev/vda2
