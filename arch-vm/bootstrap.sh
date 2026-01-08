@@ -15,12 +15,6 @@ sudo pacman -Syu --needed --noconfirm \
 # 2. Enable System Services
 sudo systemctl enable --now seatd
 
-# Explicitly ensure the group exists (seatd usually creates it, but this is safe)
-getent group seat || sudo groupadd -r seat
-
-# Now add the user
-sudo usermod -aG seat,video,render $USER
-
 # 3. Install Nix (Determinate Installer)
 if ! command -v nix &> /dev/null; then
     curl -fsSL https://install.determinate.systems/nix | sh -s -- install --no-confirm
