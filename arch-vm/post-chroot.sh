@@ -10,4 +10,5 @@ ls /mnt
 # Should see: @  @blank  @nix ...
 
 umount /mnt
-reboot
+
+echo "Done! Good to reboot."
