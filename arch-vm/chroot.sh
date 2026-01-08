@@ -12,6 +12,15 @@ systemctl enable NetworkManager
 # User Setup
 useradd -m -G wheel aiden
 echo "aiden:password" | chpasswd  # Set a temp password
+
+# Pre-emptively create the seat group and add the user
+groupadd -r seat
+usermod -aG seat,video,render aiden
+
+# Ensure the persistent copy gets these changes
+cp /etc/{passwd,shadow,group} /persist/etc/
+
+# Add wheel group to sudoers list
 echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
 
 # --- 1. Create the Nuke Hook (Runtime) ---
