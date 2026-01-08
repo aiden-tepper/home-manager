@@ -22,9 +22,9 @@ bootstrap:
 	nix run github:nix-community/home-manager -- switch --flake .#$(HOST)
 
 .PHONY: bootstrap-macbook
-bootstrap:
+bootstrap-macbook:
 	nix run github:nix-community/home-manager -- switch --flake .#macbook
 
 .PHONY: bootstrap-spectre
-bootstrap:
+bootstrap-spectre:
 	nix run github:nix-community/home-manager -- switch --flake .#spectre
