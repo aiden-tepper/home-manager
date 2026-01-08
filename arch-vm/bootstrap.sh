@@ -15,11 +15,24 @@ sudo pacman -Syu --needed --noconfirm \
 # 2. Enable System Services
 sudo systemctl enable --now seatd
 
+# --- IDENTITY HOLE-PUNCHING ---
+# We must unmount these so groupadd/useradd can modify the real files on disk
+echo "Temporarily unmounting identity files for configuration..."
+sudo umount /etc/group || true
+sudo umount /etc/passwd || true
+sudo umount /etc/shadow || true
+
 # 3. Install Nix (Determinate Installer)
 if ! command -v nix &> /dev/null; then
     curl -fsSL https://install.determinate.systems/nix | sh -s -- install --no-confirm
     . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
+
+# --- RESTORE IDENTITY BIND-MOUNTS ---
+echo "Restoring identity bind-mounts..."
+sudo mount --bind /persist/etc/group /etc/group
+sudo mount --bind /persist/etc/passwd /etc/passwd
+sudo mount --bind /persist/etc/shadow /etc/shadow
 
 # 4. Create home for user-specific data in @persist subvol
 sudo mkdir -p /persist/home/aiden
