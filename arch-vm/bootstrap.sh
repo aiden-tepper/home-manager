@@ -33,8 +33,10 @@ sudo chown aiden:aiden /persist/home/aiden
 sudo chmod 700 /persist/home/aiden
 
 # 5. Clone repo and apply Home Manager
-git clone https://github.com/aiden-tepper/home-manager /persist/home/aiden/home-manager
-cd /persist/home/aiden/home-manager
+REPO_DIR="/home/aiden/projects/home-manager"
+mkdir -p /home/aiden/projects
+git clone https://github.com/aiden-tepper/home-manager "$REPO_DIR"
+cd "$REPO_DIR"
 make bootstrap
 
-echo "Bootstrap complete!"
+echo "Bootstrap complete! Reboot now for user/group changes to take effect."
