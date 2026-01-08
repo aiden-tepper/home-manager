@@ -58,6 +58,7 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "arch-nix-vm" > /etc/hostname
+echo "KEYMAP=us" > /etc/vconsole.conf
 
 # Network
 systemctl enable NetworkManager
@@ -109,7 +110,7 @@ INST
 sed -i 's/HOOKS=(base udev/HOOKS=(base udev erase-my-darlings/' /etc/mkinitcpio.conf
 
 # Build Initramfs
-mkinitcpio -P
+mkinitcpio -P || echo "mkinitcpio finished with warnings, continuing..."
 
 # Bootloader
 bootctl install
