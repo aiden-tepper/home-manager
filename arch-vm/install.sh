@@ -4,8 +4,15 @@ set -e
 echo "--- Starting Unified Arch-Nix Installation ---"
 
 # Non-Interactive Partitioning
-sgdisk -Z -o -n 1:0:+512M -t 1:ef00 -n 2:0:0 -t 2:8300 /dev/vda
-udevadm settle # Wait for kernel to register new partitions
+# -Z: Zap (destroy) GPT/MBR
+# -o: New GPT
+# -n 1:0:+512M: Partition 1, auto-select start, 512MiB size
+# -t 1:ef00: Set type to EFI
+# -n 2:0:0: Partition 2, auto-select start, use remainder
+# -t 2:8300: Set type to Linux Filesystem
+sgdisk --zap-all /dev/vda
+sgdisk --new=1:0:+512M --typecode=1:ef00 /dev/vda
+sgdisk --new=2:0:0 --typecode=2:8300 /dev/vda
 
 # Setup Partitions
 mkfs.fat -F 32 -n BOOT /dev/vda1
