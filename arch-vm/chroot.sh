@@ -17,6 +17,18 @@ echo "aiden:password" | chpasswd  # Set a temp password
 groupadd -r seat
 usermod -aG seat,video,render aiden
 
+# Pre-create Nix build groups so the installer doesn't have to
+groupadd -g 30000 --system nixbld
+for i in {1..32}; do
+    useradd -c "Nix build user $i" \
+            -d /var/empty \
+            -g nixbld \
+            -G nixbld \
+            -M -N -r \
+            -s /usr/bin/nologin \
+            nixbld$i
+done
+
 # Ensure the persistent copy gets these changes
 cp /etc/{passwd,shadow,group} /persist/etc/
 
