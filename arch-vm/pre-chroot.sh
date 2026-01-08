@@ -15,8 +15,6 @@ btrfs subvolume create /mnt/@persist      # Persistent System Configs
 btrfs subvolume create /mnt/@log          # Persistent Logs
 btrfs subvolume create /mnt/@pkg          # Persistent Pacman Cache
 btrfs subvolume create /mnt/@db           # Persistent Pacman Database
-# Take a snapshot of empty root. On every boot, we will delete the dirty @ and replace it with this @blank
-btrfs subvolume snapshot -r /mnt/@ /mnt/@blank
 
 umount /mnt
 
