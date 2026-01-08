@@ -32,8 +32,8 @@ mount -o $OPTS,subvol=@persist /dev/vda2 /mnt/persist
 mount -o $OPTS,subvol=@log     /dev/vda2 /mnt/var/log
 mount -o $OPTS,subvol=@pkg     /dev/vda2 /mnt/var/cache/pacman/pkg
 
-# --- 4. Install Base + Nix ---
-pacstrap -K /mnt base base-devel linux linux-firmware btrfs-progs git vim networkmanager sudo nix
+# --- 4. Install Base  ---
+pacstrap -K /mnt base base-devel linux linux-firmware btrfs-progs git vim networkmanager sudo
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -50,21 +50,15 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "arch-nix-vm" > /etc/hostname
 
 # User Setup
-useradd -m -G wheel,nix-users aiden
+useradd -m -G wheel aiden
 echo "aiden:password" | chpasswd
-
-# Nix Configuration (Enable Flakes)
-mkdir -p /etc/nix
-echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
-systemctl enable nix-daemon.service
 
 # Services
 systemctl enable NetworkManager
 
 # --- Persist /etc Identity ---
-# Now that Nix users exist, we can safely copy identity files to persist
 mkdir -p /persist/etc
-cp /etc/{passwd,shadow,group,machine-id} /persist/etc/
+cp /etc/machine-id /persist/etc/
 
 # Persist NetworkManager state
 mkdir -p /persist/var/lib/networkmanager
@@ -78,9 +72,6 @@ chown -R aiden:aiden /persist/home/aiden
 cat <<FSTAB >> /etc/fstab
 
 # --- PERSISTENCE ---
-/persist/etc/passwd                /etc/passwd                none bind 0 0
-/persist/etc/shadow                /etc/shadow                none bind 0 0
-/persist/etc/group                 /etc/group                 none bind 0 0
 /persist/etc/machine-id            /etc/machine-id            none bind 0 0
 /persist/var/lib/networkmanager    /var/lib/networkmanager    none bind 0 0
 /persist/etc/ssh                   /etc/ssh                   none bind 0 0
