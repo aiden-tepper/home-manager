@@ -21,15 +21,16 @@ btrfs subvolume create /mnt/@log        # Logs
 btrfs subvolume create /mnt/@pkg        # Pacman Cache
 umount /mnt
 
-# Mount everything in place
+# --- 3. Mounts ---
+OPTS="compress=zstd,noatime"
 mount -o $OPTS,subvol=@ /dev/vda2 /mnt
-mkdir -p /mnt/{boot,nix,persist,var/log,var/cache/pacman/pkg,var/lib/pacman}
 
+mkdir -p /mnt/{boot,nix,persist,var/log,var/cache/pacman/pkg}
 mount /dev/vda1 /mnt/boot
-mount -o $OPTS,subvol=@nix /dev/vda2 /mnt/nix
+mount -o $OPTS,subvol=@nix     /dev/vda2 /mnt/nix
 mount -o $OPTS,subvol=@persist /dev/vda2 /mnt/persist
-mount -o $OPTS,subvol=@log /dev/vda2 /mnt/var/log
-mount -o $OPTS,subvol=@pkg /dev/vda2 /mnt/var/cache/pacman/pkg
+mount -o $OPTS,subvol=@log     /dev/vda2 /mnt/var/log
+mount -o $OPTS,subvol=@pkg     /dev/vda2 /mnt/var/cache/pacman/pkg
 
 # --- 4. Install Base + Nix ---
 pacstrap -K /mnt base base-devel linux linux-firmware btrfs-progs git vim networkmanager sudo nix
