@@ -48,7 +48,7 @@ echo "UUID=$UUID /.snapshots btrfs subvolid=5,$OPTS 0 0" >> /mnt/etc/fstab
 
 echo "Phase 1 Complete. Entering chroot."
 
-arch-chroot /mnt <<EOF
+arch-chroot /mnt <<'EOF'
 set -e
 
 # Basic Setup
@@ -69,9 +69,6 @@ echo "aiden:password" | chpasswd  # Set a temp password
 # Pre-emptively create the seat group and add the user
 groupadd -r seat
 usermod -aG seat,video,render aiden
-
-# Ensure the persistent copy gets these changes
-cp /etc/{passwd,shadow,group} /persist/etc/
 
 # Add wheel group to sudoers list
 echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
@@ -157,18 +154,11 @@ echo "Phase 2 Complete. Exiting chroot now."
 
 EOF
 
-
-# We need to access the top-level subvolume one last time
-mount -t btrfs -o subvolid=5 /dev/vda2 /mnt
-
-# NOW we take the snapshot. 
-# Since @ is currently mounted and active as /mnt/@, this captures the installed OS.
-btrfs subvolume snapshot -r /mnt/@ /mnt/@blank
-
-# Verify it exists
-ls /mnt
-# Should see: @  @blank  @nix ...
-
-umount /mnt
+# Post-Chroot Snapshot (using a temporary mount point)
+mkdir -p /mnt-temp
+mount -o subvolid=5 /dev/vda2 /mnt-temp
+btrfs subvolume snapshot -r /mnt-temp/@ /mnt-temp/@blank
+umount /mnt-temp
+rmdir /mnt-temp
 
 echo "--- Installation Complete! Reboot and run bootstrap.sh ---"
