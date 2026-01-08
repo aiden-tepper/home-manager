@@ -60,7 +60,7 @@ run_hook() {
 HOOK
 
 sed -i 's/HOOKS=(base udev/HOOKS=(base udev erase-root/' /etc/mkinitcpio.conf
-mkinitcpio -P
+mkinitcpio -P || true
 
 bootctl install
 cat <<BOOT > /boot/loader/entries/arch.conf

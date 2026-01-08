@@ -26,6 +26,6 @@ git clone https://github.com/aiden-tepper/home-manager "$REPO_DIR"
 cd "$REPO_DIR"
 
 # Apply HM (this will create your symlinks in the home dir)
-make bootstrap
+nix run github:nix-community/home-manager -- switch --flake .#spectre
 
 echo "Bootstrap complete. Every reboot from now on will wipe the root subvolume!"
