@@ -64,7 +64,7 @@ EOF
 # --- 4. Persistence Tricks ---
 # Create the physical folders in the persist vault
 mkdir -p /persist/etc
-mkdir -p /persist/var/lib/{networkmanager,bluetooth,pacman}
+mkdir -p /persist/var/lib/{networkmanager,bluetooth}
 mkdir -p /persist/home/aiden/{.ssh,.config/gh,projects}
 chown -R 1000:1000 /persist/home/aiden
 chmod 700 /persist/home/aiden/.ssh
@@ -83,7 +83,6 @@ cat <<EOF >> /etc/fstab
 
 # --- SYSTEM STATE ---
 /persist/var/lib/networkmanager /var/lib/networkmanager none bind 0 0
-/persist/var/lib/pacman /var/lib/pacman none bind 0 0
 /persist/var/lib/bluetooth /var/lib/bluetooth none bind 0 0
 
 # --- USER IDENTITY & DEV ---
